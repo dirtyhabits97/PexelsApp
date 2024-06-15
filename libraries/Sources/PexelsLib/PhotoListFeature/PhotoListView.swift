@@ -43,9 +43,9 @@ struct PhotoRowView: View {
                     .frame(width: 20, height: 20)
                     .cornerRadius(4)
             }
-            
+
             Spacer()
-            
+
             Image(systemName: "chevron.right")
                 .foregroundColor(.gray)
         }
@@ -82,4 +82,4 @@ extension Color {
     }
 }
 
-extension Photo: Identifiable { }
+extension Photo: Identifiable {}
