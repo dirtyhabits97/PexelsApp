@@ -3,4 +3,4 @@
 set -euo pipefail
 
 DESTINATION="platform=iOS Simulator,name=iPhone 14,OS=16.4"
-xcodebuild test -scheme PexelsLib -destination "${DESTINATION}"
+xcodebuild test -scheme PexelsLib -destination "${DESTINATION}" -sdk iphonesimulator
