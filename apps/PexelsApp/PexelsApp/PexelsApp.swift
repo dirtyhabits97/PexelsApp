@@ -25,7 +25,7 @@ struct PexelsApp: App {
 }
 
 final class DependencyContainer: ObservableObject {
-    lazy var httpClient = HTTPClientImpl(apiKey: ProcessInfo.processInfo.environment["API_KEY"] ?? "")
+    lazy var httpClient = HTTPClientImpl(apiKey: ProcessInfo.processInfo.environment["PEXELS_API_KEY"] ?? "")
     lazy var imageService = ImagesService(
         config: ImagesServiceConfig(),
         httpClient: httpClient
