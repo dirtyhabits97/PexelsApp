@@ -28,6 +28,7 @@ final class ImagesService {
     }
 }
 
+// TODO: Move these abstractions to their own file
 @available(macOS 15.0, *)
 protocol HTTPClient {
     func enqueue(_: HTTPRequest) -> AnyPublisher<Data, Error>
