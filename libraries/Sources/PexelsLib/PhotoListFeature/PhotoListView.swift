@@ -13,11 +13,16 @@ public struct PhotoListView: View {
     public var body: some View {
         List(observedObject.photos) { photo in
             PhotoRowView(photo: photo)
+                .onAppear {
+                    if photo.id == observedObject.photos.last?.id {
+                        observedObject.loadMorePhotos()
+                    }
+                }
         }
-        .navigationTitle("Photos")
         .onAppear {
             observedObject.loadMorePhotos()
         }
+        .navigationTitle("Photos")
     }
 }
 
@@ -38,6 +43,11 @@ struct PhotoRowView: View {
                     .frame(width: 20, height: 20)
                     .cornerRadius(4)
             }
+            
+            Spacer()
+            
+            Image(systemName: "chevron.right")
+                .foregroundColor(.gray)
         }
     }
 

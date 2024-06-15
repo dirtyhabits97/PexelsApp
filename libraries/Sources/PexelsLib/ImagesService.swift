@@ -22,6 +22,11 @@ struct GetCuratedImagesResponse: Codable {
     let nextPage: URL?
 }
 
+// TODO: There's a problem with the API
+// where the same photo is returned in a different page.
+// what we can do is
+// A) Create a wrapper
+// B) Create a local Id that is a combination of the page and the id hashed together.
 public struct Photo: Codable {
     public let id: Int
     let width: Int
