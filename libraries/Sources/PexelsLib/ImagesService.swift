@@ -29,7 +29,12 @@ struct Photo: Codable {
     let photographerURL: URL
     let photographerId: Int
     let avgColor: String
+    let src: PhotoSource
     let alt: String
+}
+
+struct PhotoSource: Codable {
+    let tiny: URL
 }
 
 @available(macOS 15.0, *)

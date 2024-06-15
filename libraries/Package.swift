@@ -29,6 +29,9 @@ let package = Package(
             dependencies: [
                 "PexelsLib",
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+            ],
+            resources: [
+                .process("Fixtures/curated_photos_single_photo_response.json"),
             ]
         ),
     ]

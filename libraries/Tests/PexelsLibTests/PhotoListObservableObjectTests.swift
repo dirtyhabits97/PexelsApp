@@ -2,6 +2,7 @@ import Combine
 @testable import PexelsLib
 import XCTest
 
+@available(iOS 16.0, *)
 @available(macOS 15.0, *)
 final class PhotoListObservableObjectTests: XCTestCase {
     func test_receivesEmptyPhotos() throws {
@@ -33,13 +34,13 @@ final class PhotoListObservableObjectTests: XCTestCase {
         let photo1 = Photo(
             id: 1, width: 0, height: 0, url: .dummy,
             photographer: "", photographerURL: .dummy, photographerId: 0,
-            avgColor: "", alt: ""
+            avgColor: "", src: PhotoSource(tiny: .dummy), alt: ""
         )
         let page1 = GetCuratedImagesResponse(page: 1, perPage: 1, photos: [photo1], nextPage: nil)
         let photo2 = Photo(
             id: 2, width: 0, height: 0, url: .dummy,
             photographer: "", photographerURL: .dummy, photographerId: 0,
-            avgColor: "", alt: ""
+            avgColor: "", src: PhotoSource(tiny: .dummy), alt: ""
         )
         let page2 = GetCuratedImagesResponse(page: 2, perPage: 1, photos: [photo2], nextPage: nil)
         XCTAssertEqual(observableObject.photos.count, 0)
