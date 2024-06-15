@@ -1,5 +1,5 @@
-import XCTest
 @testable import PexelsLib
+import XCTest
 
 final class PexelsLibTests: XCTestCase {
     func testExample() throws {
