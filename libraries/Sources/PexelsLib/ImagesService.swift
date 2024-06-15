@@ -3,8 +3,8 @@ import Foundation
 
 public struct ImagesServiceConfig {
     let imagesPerPage = 15
-    
-    public init() { }
+
+    public init() {}
 }
 
 struct GetCuratedImagesRequest {

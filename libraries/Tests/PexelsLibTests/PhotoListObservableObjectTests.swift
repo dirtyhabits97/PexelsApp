@@ -6,19 +6,20 @@ import XCTest
 @available(macOS 15.0, *)
 final class PhotoListObservableObjectTests: XCTestCase {
     var cancellables = Set<AnyCancellable>()
+    var httpClient = HTTPClientMock()
+    var imagesService = ImagesService(httpClient: HTTPClientMock())
 
     func test_receivesEmptyPhotos() throws {
         // given
         let expectation = expectation(description: #function)
-        let httpClient = HTTPClientMock()
-        let imagesService = ImagesService(httpClient: httpClient)
         let observableObject = PhotoListObservableObject(imagesService: imagesService)
+        let fixture = try getFixture("curated_photos_empty_photos.json", as: GetCuratedImagesResponse.self)
+
         XCTAssertEqual(httpClient.enqueueCallCount, 0)
         XCTAssertEqual(observableObject.photos.count, 0)
         // when
         httpClient.enqueueHandler = { _ in
-            let response = GetCuratedImagesResponse(page: 1, perPage: 1, photos: [], nextPage: nil)
-            return Just(response)
+            Just(fixture)
                 .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }
@@ -40,21 +41,10 @@ final class PhotoListObservableObjectTests: XCTestCase {
     func test_photosGetUpdated() throws {
         // given
         let expectation = expectation(description: #function)
-        let httpClient = HTTPClientMock()
-        let imagesService = ImagesService(httpClient: httpClient)
         let observableObject = PhotoListObservableObject(imagesService: imagesService)
-        let photo1 = Photo(
-            id: 1, width: 0, height: 0, url: .dummy,
-            photographer: "", photographerUrl: .dummy, photographerId: 0,
-            avgColor: "", src: PhotoSource(tiny: .dummy), alt: ""
-        )
-        let page1 = GetCuratedImagesResponse(page: 1, perPage: 1, photos: [photo1], nextPage: nil)
-        let photo2 = Photo(
-            id: 2, width: 0, height: 0, url: .dummy,
-            photographer: "", photographerUrl: .dummy, photographerId: 0,
-            avgColor: "", src: PhotoSource(tiny: .dummy), alt: ""
-        )
-        let page2 = GetCuratedImagesResponse(page: 2, perPage: 1, photos: [photo2], nextPage: nil)
+        let page1 = try getFixture("curated_photos_page_1.json", as: GetCuratedImagesResponse.self)
+        let page2 = try getFixture("curated_photos_page_2.json", as: GetCuratedImagesResponse.self)
+
         XCTAssertEqual(observableObject.photos.count, 0)
         // when
         var isFirstTime = true
@@ -81,16 +71,14 @@ final class PhotoListObservableObjectTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
         // then
         XCTAssertEqual(observableObject.photos.count, 2)
-        XCTAssertEqual(observableObject.photos[0].id, photo1.id)
-        XCTAssertEqual(observableObject.photos[1].id, photo2.id)
+        XCTAssertEqual(observableObject.photos[0].id, page1.photos.first?.id)
+        XCTAssertEqual(observableObject.photos[1].id, page2.photos.first?.id)
     }
 
     override func setUp() {
         super.setUp()
         cancellables = []
+        httpClient = HTTPClientMock()
+        imagesService = ImagesService(httpClient: httpClient)
     }
-}
-
-extension URL {
-    static let dummy = URL(string: "https://dummy.url")!
 }
