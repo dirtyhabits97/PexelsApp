@@ -23,6 +23,7 @@ public final class PhotoListObservableObject: ObservableObject {
 
         imagesService
             .getCuratedImages(request)
+            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case let .failure(error):
