@@ -6,14 +6,18 @@ struct ImagesServiceConfig {
 }
 
 struct GetCuratedImagesRequest {
-    let page: Int = 15
+    let page: Int
+
+    init(page: Int = 1) {
+        self.page = page
+    }
 }
 
 struct GetCuratedImagesResponse: Codable {
     let page: Int
     let perPage: Int
     let photos: [Photo]
-    let nextPage: URL
+    let nextPage: URL?
 }
 
 struct Photo: Codable {
