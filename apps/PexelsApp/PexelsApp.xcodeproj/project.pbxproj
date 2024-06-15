@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		D62C8A1E2C1D6515000C0DC8 /* PexelsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62C8A1D2C1D6515000C0DC8 /* PexelsApp.swift */; };
-		D62C8A202C1D6515000C0DC8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62C8A1F2C1D6515000C0DC8 /* ContentView.swift */; };
 		D62C8A222C1D6516000C0DC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D62C8A212C1D6516000C0DC8 /* Assets.xcassets */; };
 		D62C8A252C1D6516000C0DC8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D62C8A242C1D6516000C0DC8 /* Preview Assets.xcassets */; };
 		D62C8A2F2C1D6517000C0DC8 /* PexelsAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62C8A2E2C1D6517000C0DC8 /* PexelsAppTests.swift */; };
@@ -37,7 +36,6 @@
 /* Begin PBXFileReference section */
 		D62C8A1A2C1D6515000C0DC8 /* PexelsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PexelsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D62C8A1D2C1D6515000C0DC8 /* PexelsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PexelsApp.swift; sourceTree = "<group>"; };
-		D62C8A1F2C1D6515000C0DC8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D62C8A212C1D6516000C0DC8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D62C8A242C1D6516000C0DC8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D62C8A2A2C1D6517000C0DC8 /* PexelsAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PexelsAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,7 +95,6 @@
 			isa = PBXGroup;
 			children = (
 				D62C8A1D2C1D6515000C0DC8 /* PexelsApp.swift */,
-				D62C8A1F2C1D6515000C0DC8 /* ContentView.swift */,
 				D62C8A212C1D6516000C0DC8 /* Assets.xcassets */,
 				D62C8A232C1D6516000C0DC8 /* Preview Content */,
 			);
@@ -265,7 +262,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D62C8A202C1D6515000C0DC8 /* ContentView.swift in Sources */,
 				D62C8A1E2C1D6515000C0DC8 /* PexelsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

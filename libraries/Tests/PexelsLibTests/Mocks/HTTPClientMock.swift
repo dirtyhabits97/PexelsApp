@@ -4,7 +4,6 @@ import Foundation
 
 @available(macOS 15.0, *)
 class HTTPClientMock: HTTPClient {
-    // MARK: - enqueue
 
     var enqueueCallCount = 0
 
