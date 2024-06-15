@@ -26,7 +26,10 @@ let package = Package(
         ),
         .testTarget(
             name: "PexelsLibTests",
-            dependencies: ["PexelsLib"]
+            dependencies: [
+                "PexelsLib",
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+            ]
         ),
     ]
 )
