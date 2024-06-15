@@ -4,7 +4,7 @@ import SwiftUI
 // TODO: Move this to its own PexelsFeature package
 
 @available(macOS 15.0, *)
-final class PhotoListObservableObject: ObservableObject {
+public final class PhotoListObservableObject: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     @Published
@@ -13,7 +13,7 @@ final class PhotoListObservableObject: ObservableObject {
     private let imagesService: ImagesService
     private var lastResponse: GetCuratedImagesResponse?
 
-    init(imagesService: ImagesService) {
+    public init(imagesService: ImagesService) {
         self.imagesService = imagesService
     }
 

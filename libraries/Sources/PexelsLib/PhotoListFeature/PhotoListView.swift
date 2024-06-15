@@ -2,18 +2,19 @@ import Combine
 import SwiftUI
 
 @available(macOS 15.0, *)
-struct PhotoListView: View {
+public struct PhotoListView: View {
     @StateObject
     var observedObject: PhotoListObservableObject
 
-    init(photoListObservableObject: PhotoListObservableObject) {
+    public init(photoListObservableObject: PhotoListObservableObject) {
         _observedObject = StateObject(wrappedValue: photoListObservableObject)
     }
 
-    var body: some View {
+    public var body: some View {
         List(observedObject.photos) { photo in
             PhotoRowView(photo: photo)
         }
+        .navigationTitle("Photos")
         .onAppear {
             observedObject.loadMorePhotos()
         }
@@ -72,4 +73,4 @@ extension Color {
     }
 }
 
-extension Photo: Identifiable {}
+extension Photo: Identifiable { }

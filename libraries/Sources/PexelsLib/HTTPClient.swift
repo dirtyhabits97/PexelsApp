@@ -2,12 +2,12 @@ import Combine
 import Foundation
 
 @available(macOS 15.0, *)
-protocol HTTPClient {
+public protocol HTTPClient {
     func enqueue<Model: Codable>(_: HTTPRequest) -> AnyPublisher<Model, Error>
 }
 
 @available(macOS 15.0, *)
-final class HTTPClientImpl: HTTPClient {
+public final class HTTPClientImpl: HTTPClient {
     private let baseURL = URL(string: "https://api.pexels.com")!
     private let urlSession: URLSession
 
@@ -17,18 +17,18 @@ final class HTTPClientImpl: HTTPClient {
         return decoder
     }()
 
-    init() {
+    public init(apiKey: String) {
         let config = URLSessionConfiguration.default
         config.httpAdditionalHeaders = [
             "Content-Type": "application/json",
-            "Authorization": "TODO: Set this token",
+            "Authorization": apiKey,
         ]
         urlSession = URLSession(configuration: config)
     }
 
     // MARK: - HTTPClient
 
-    func enqueue<Model: Codable>(_ request: HTTPRequest) -> AnyPublisher<Model, Error> {
+    public func enqueue<Model: Codable>(_ request: HTTPRequest) -> AnyPublisher<Model, Error> {
         do {
             let urlRequest = try buildURLRequest(from: request)
             return urlSession
@@ -65,12 +65,12 @@ final class HTTPClientImpl: HTTPClient {
     }
 }
 
-struct HTTPRequest {
+public struct HTTPRequest {
     let endpoint: String
     let queryParams: [String: String]?
     let method: HTTPMethod
 }
 
-enum HTTPMethod: String {
+public enum HTTPMethod: String {
     case get = "GET"
 }

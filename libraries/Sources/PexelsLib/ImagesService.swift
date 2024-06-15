@@ -1,8 +1,10 @@
 import Combine
 import Foundation
 
-struct ImagesServiceConfig {
+public struct ImagesServiceConfig {
     let imagesPerPage = 15
+    
+    public init() { }
 }
 
 struct GetCuratedImagesRequest {
@@ -20,8 +22,8 @@ struct GetCuratedImagesResponse: Codable {
     let nextPage: URL?
 }
 
-struct Photo: Codable {
-    let id: Int
+public struct Photo: Codable {
+    public let id: Int
     let width: Int
     let height: Int
     let url: URL
@@ -38,11 +40,11 @@ struct PhotoSource: Codable {
 }
 
 @available(macOS 15.0, *)
-final class ImagesService {
+public final class ImagesService {
     private let config: ImagesServiceConfig
     private let httpClient: HTTPClient
 
-    init(config: ImagesServiceConfig = ImagesServiceConfig(), httpClient: HTTPClient) {
+    public init(config: ImagesServiceConfig = ImagesServiceConfig(), httpClient: HTTPClient) {
         self.config = config
         self.httpClient = httpClient
     }
