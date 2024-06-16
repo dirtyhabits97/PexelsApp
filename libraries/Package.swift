@@ -31,7 +31,7 @@ let package = Package(
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ],
             resources: [
-                .process("Fixtures/curated_photos_single_photo_response.json"),
+                .process("Fixtures/curated_photos_multiple_photos_response.json"),
                 .process("Fixtures/curated_photos_empty_photos.json"),
                 .process("Fixtures/curated_photos_page_1.json"),
                 .process("Fixtures/curated_photos_page_2.json"),

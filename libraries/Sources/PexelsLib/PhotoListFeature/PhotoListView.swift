@@ -37,11 +37,7 @@ struct PhotoRowView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(photo.photographer)
                     .font(.headline)
-
-                // Average Color Square
-                Color(hex: photo.avgColor)
-                    .frame(width: 20, height: 20)
-                    .cornerRadius(4)
+                averageColor
             }
 
             Spacer()
@@ -61,6 +57,18 @@ struct PhotoRowView: View {
         } placeholder: {
             ProgressView()
                 .frame(width: 50, height: 50)
+        }
+    }
+
+    private var averageColor: some View {
+        HStack(spacing: 4) {
+            Color(hex: photo.avgColor)
+                .frame(width: 20, height: 20)
+                .cornerRadius(4)
+            Text(photo.alt)
+                .font(.caption)
+                .lineLimit(1)
+                .truncationMode(.tail)
         }
     }
 }

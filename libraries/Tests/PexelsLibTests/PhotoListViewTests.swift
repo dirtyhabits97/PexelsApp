@@ -5,40 +5,44 @@ import XCTest
 
 @available(macOS 15.0, *)
 final class PhotoListViewTests: XCTestCase {
-    var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     private var httpClient = HTTPClientMock()
+    private var imagesService = ImagesService(httpClient: HTTPClientMock())
 
-    func test_viewWithOneElement() throws {
+    func test_rowView() throws {
+        // given
+        let fixture = try getFixture(
+            "curated_photos_page_1.json",
+            as: GetCuratedImagesResponse.self
+        ).photos[0]
+        // then
+        let view = PhotoRowView(photo: fixture)
+        #if os(iOS)
+            assertSnapshot(
+                of: view,
+                as: .image(layout: .device(config: .iPhoneSe), traits: .init(userInterfaceStyle: .light))
+            )
+        #endif
+    }
+
+    func test_listWithOneElement() throws {
         // given
         let expectation = expectation(description: #function)
-        let imageService = ImagesService(httpClient: httpClient)
-        let observableObject = PhotoListObservableObject(imagesService: imageService)
+        let observableObject = PhotoListObservableObject(imagesService: imagesService)
+        let fixture = try getFixture("curated_photos_page_1.json", as: GetCuratedImagesResponse.self)
         // when
         httpClient.enqueueHandler = { _ in
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            do {
-                let fixtureURL = try getFixtureURL("curated_photos_single_photo_response.json")
-                let data = try Data(contentsOf: fixtureURL)
-                let response = try decoder.decode(GetCuratedImagesResponse.self, from: data)
-                return Just(response)
-                    .setFailureType(to: Error.self)
-                    .eraseToAnyPublisher()
-            } catch {
-                return Fail<GetCuratedImagesResponse, Error>(error: error)
-                    .eraseToAnyPublisher()
-            }
+            Just(fixture)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
         }
 
         observableObject.$photos
             .dropFirst()
-            .sink(receiveValue: { _ in
-                expectation.fulfill()
-            })
+            .sink(receiveValue: { _ in expectation.fulfill() })
             .store(in: &cancellables)
 
         observableObject.loadMorePhotos()
-
         wait(for: [expectation], timeout: 1)
 
         // then
@@ -52,9 +56,42 @@ final class PhotoListViewTests: XCTestCase {
         #endif
     }
 
+    func test_listWithMultipleElements() throws {
+        // given
+        let expectation = expectation(description: #function)
+        let observableObject = PhotoListObservableObject(imagesService: imagesService)
+        let fixture = try getFixture("curated_photos_multiple_photos_response.json", as: GetCuratedImagesResponse.self)
+        // when
+        httpClient.enqueueHandler = { _ in
+            Just(fixture)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+
+        observableObject.$photos
+            .dropFirst()
+            .sink(receiveValue: { _ in expectation.fulfill() })
+            .store(in: &cancellables)
+
+        observableObject.loadMorePhotos()
+        wait(for: [expectation], timeout: 1)
+
+        // then
+        let view = PhotoListView(photoListObservableObject: observableObject)
+        #if os(iOS)
+            assertSnapshot(
+                of: view,
+                as: .image(layout: .device(config: .iPhoneSe), traits: .init(userInterfaceStyle: .light))
+            )
+        #endif
+    }
+
+    // MARK: - Helpers
+
     override func setUp() {
         super.setUp()
-        httpClient = HTTPClientMock()
         cancellables = []
+        httpClient = HTTPClientMock()
+        imagesService = ImagesService(httpClient: httpClient)
     }
 }

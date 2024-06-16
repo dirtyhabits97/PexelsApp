@@ -42,3 +42,20 @@ Additionally, we can create a stream to get notifications on the connectivity st
 NetworkConnectionStream
 + status: Observable<Status>
 ```
+
+## How to test
+
+The project is divided in:
+* `app`: Contains the glue code for all the features and dependencies
+* `library`: Contains the features + business logic
+
+The tests can be found in `library/`. If you want to run only unit tests, you can do the following:
+```
+cd libraries & swift test
+```
+
+If you want to run all the tests, including snapshot tests, you will need to install [git-lfs](https://git-lfs.com/) first
+to download the images in the `__Snapshots__` folder. After that you can run:
+```
+cd libraries & ./test.sh
+```

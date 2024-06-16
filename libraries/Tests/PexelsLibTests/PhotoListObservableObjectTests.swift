@@ -75,6 +75,8 @@ final class PhotoListObservableObjectTests: XCTestCase {
         XCTAssertEqual(observableObject.photos[1].id, page2.photos.first?.id)
     }
 
+    // MARK: - Helpers
+
     override func setUp() {
         super.setUp()
         cancellables = []
