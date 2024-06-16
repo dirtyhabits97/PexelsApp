@@ -41,6 +41,13 @@ public struct Photo: Codable {
 }
 
 struct PhotoSource: Codable {
+    let original: URL
+    let large2x: URL?
+    let large: URL?
+    let medium: URL?
+    let small: URL?
+    let portrait: URL?
+    let landscape: URL?
     let tiny: URL
 }
 

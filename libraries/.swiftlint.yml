@@ -1,2 +1,5 @@
 disabled_rules:
   - trailing_comma
+
+line_length: 
+  ignores_comments: true
