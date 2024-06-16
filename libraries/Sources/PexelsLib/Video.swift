@@ -1,30 +1,30 @@
 import Foundation
 
-struct Video: Codable, Identifiable {
-    let id: Int
-    let width: Int
-    let height: Int
-    let url: URL
-    let image: URL
-    let fullRes: URL?
-    let tags: [String]
-    let duration: Int
-    let user: VideoUser
-    let videoFiles: [VideoFile]
+public struct Video: Codable, Identifiable {
+    public let id: Int
+    public let width: Int
+    public let height: Int
+    public let url: URL
+    public let image: URL
+    public let fullRes: URL?
+    public let tags: [String]
+    public let duration: Int
+    public let user: VideoUser
+    public let videoFiles: [VideoFile]
 }
 
-struct VideoUser: Codable {
-    let id: Int
-    let name: String
-    let url: URL
+public struct VideoUser: Codable {
+    public let id: Int
+    public let name: String
+    public let url: URL
 }
 
-struct VideoFile: Codable {
-    let id: Int
-    let quality: String
-    let fileType: String
-    let width: Int
-    let height: Int
-    let fps: Float
-    let link: URL
+public struct VideoFile: Codable {
+    public let id: Int
+    public let quality: String
+    public let fileType: String
+    public let width: Int
+    public let height: Int
+    public let fps: Float
+    public let link: URL
 }

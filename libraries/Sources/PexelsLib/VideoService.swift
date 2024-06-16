@@ -1,11 +1,15 @@
 import Combine
 import Foundation
 
-struct GetVideoMetadataRequest {
-    let id: Int
+package struct GetVideoMetadataRequest {
+    package let id: Int
+
+    package init(id: Int) {
+        self.id = id
+    }
 }
 
-typealias GetVideoMetadataResponse = Video
+package typealias GetVideoMetadataResponse = Video
 
 @available(macOS 15.0, *)
 public final class VideoService {
@@ -15,12 +19,11 @@ public final class VideoService {
         self.httpClient = httpClient
     }
 
-    func getVideoMetadata(_ request: GetVideoMetadataRequest) -> AnyPublisher<GetVideoMetadataResponse, Error> {
+    package func getVideoMetadata(
+        _ request: GetVideoMetadataRequest
+    ) -> AnyPublisher<GetVideoMetadataResponse, Error> {
         let request = HTTPRequest(
-            endpoint: "/videos",
-            queryParams: [
-                "id": String(request.id),
-            ],
+            endpoint: "/videos/videos/\(request.id)",
             method: .get
         )
         return httpClient.enqueue(request)

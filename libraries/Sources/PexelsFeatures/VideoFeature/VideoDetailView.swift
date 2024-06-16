@@ -1,16 +1,25 @@
 import Combine
+import PexelsLib
 import SwiftUI
 
 @available(macOS 15.0, *)
 public struct VideoDetailView: View {
     @StateObject
-    var observedObject: VideoDetailObservableObject
+    private var observedObject: VideoDetailObservableObject
 
     public init(videoDetailObservableObject: VideoDetailObservableObject) {
         _observedObject = StateObject(wrappedValue: videoDetailObservableObject)
     }
 
     public var body: some View {
+        contentView
+            .onAppear {
+                observedObject.fetchVideoMetadata()
+            }
+    }
+
+    @ViewBuilder
+    private var contentView: some View {
         if observedObject.isLoading {
             ProgressView("Loading...")
         } else if let errorMessage = observedObject.errorMessage {
@@ -18,6 +27,8 @@ public struct VideoDetailView: View {
                 .foregroundColor(.red)
         } else if let video = observedObject.video {
             VideoContentView(video: video)
+        } else {
+            ProgressView("Loading...")
         }
     }
 }
@@ -45,16 +56,18 @@ private struct VideoContentView: View {
                 .foregroundColor(.secondary)
                 .lineLimit(nil)
 
-            HStack {
+            HStack(spacing: 4) {
                 Text("Duration:")
                     .font(.caption)
                     .fontWeight(.bold)
-                Spacer()
                 Text("\(video.duration) seconds")
                     .font(.caption)
+                Spacer()
             }
 
             Spacer()
         }
+        .padding(.horizontal, 16)
     }
 }
+

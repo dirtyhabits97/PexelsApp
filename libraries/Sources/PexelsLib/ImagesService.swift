@@ -7,19 +7,19 @@ public struct ImagesServiceConfig {
     public init() {}
 }
 
-struct GetCuratedImagesRequest {
-    let page: Int
+package struct GetCuratedImagesRequest {
+    package let page: Int
 
-    init(page: Int = 1) {
+    package init(page: Int = 1) {
         self.page = page
     }
 }
 
-struct GetCuratedImagesResponse: Codable {
-    let page: Int
-    let perPage: Int
-    let photos: [Photo]
-    let nextPage: URL?
+package struct GetCuratedImagesResponse: Codable {
+    package let page: Int
+    package let perPage: Int
+    package let photos: [Photo]
+    package let nextPage: URL?
 }
 
 @available(macOS 15.0, *)
@@ -32,7 +32,9 @@ public final class ImagesService {
         self.httpClient = httpClient
     }
 
-    func getCuratedImages(_ request: GetCuratedImagesRequest) -> AnyPublisher<GetCuratedImagesResponse, Error> {
+    package func getCuratedImages(
+        _ request: GetCuratedImagesRequest
+    ) -> AnyPublisher<GetCuratedImagesResponse, Error> {
         let request = HTTPRequest(
             endpoint: "/v1/curated",
             queryParams: [

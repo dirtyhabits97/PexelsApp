@@ -12,6 +12,10 @@ let package = Package(
             name: "PexelsLib",
             targets: ["PexelsLib"]
         ),
+        .library(
+            name: "PexelsFeatures",
+            targets: ["PexelsFeatures"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.12.0"),
@@ -22,12 +26,16 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "PexelsLib"
-            // dependencies: ["RxSwift"]
+        ),
+        .target(
+            name: "PexelsFeatures",
+            dependencies: ["PexelsLib"]
         ),
         .testTarget(
             name: "PexelsLibTests",
             dependencies: [
                 "PexelsLib",
+                "PexelsFeatures",
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ],
             resources: [

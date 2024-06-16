@@ -1,9 +1,14 @@
 import Combine
+import PexelsLib
 import SwiftUI
 
 @available(macOS 15.0, *)
 public struct PhotoDetailView: View {
-    let photo: Photo
+    private let photo: Photo
+
+    public init(photo: Photo) {
+        self.photo = photo
+    }
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -18,12 +23,13 @@ public struct PhotoDetailView: View {
                 .foregroundColor(.secondary)
                 .lineLimit(nil)
 
+            colorInfoView
             secondaryInfoView
             tertiaryInfoView
             Spacer()
         }
         .padding()
-        .navigationTitle("Photo Details")
+        .navigationTitle("Photo")
     }
 
     private var imageView: some View {
@@ -37,6 +43,17 @@ public struct PhotoDetailView: View {
             ProgressView()
         }
         .frame(height: 300)
+    }
+
+    private var colorInfoView: some View {
+        HStack {
+            Text("Average color:")
+                .font(.caption)
+                .fontWeight(.bold)
+            Color(hex: photo.avgColor)
+                .frame(width: 20, height: 20)
+                .cornerRadius(4)
+        }
     }
 
     private var secondaryInfoView: some View {

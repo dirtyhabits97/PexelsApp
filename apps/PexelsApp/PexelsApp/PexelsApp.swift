@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PexelsLib
+import PexelsFeatures
 
 @main
 struct PexelsApp: App {
@@ -16,9 +17,7 @@ struct PexelsApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                PhotoListView(
-                    photoListObservableObject: dependencyContainer.photoListObservableObject
-                )
+                dependencyContainer.photoListFeature.buildView()
             }
         }
     }
@@ -26,9 +25,34 @@ struct PexelsApp: App {
 
 final class DependencyContainer: ObservableObject {
     lazy var httpClient = HTTPClientImpl(apiKey: ProcessInfo.processInfo.environment["PEXELS_API_KEY"] ?? "")
-    lazy var imageService = ImagesService(
-        config: ImagesServiceConfig(),
-        httpClient: httpClient
-    )
-    lazy var photoListObservableObject = PhotoListObservableObject(imagesService: imageService)
+    
+    // MARK: - Features
+    
+    lazy var photoListFeature: PhotoListFeature = {
+        let imageService = ImagesService(config: ImagesServiceConfig(), httpClient: httpClient)
+        let photoListObservableObject = PhotoListObservableObject(imagesService: imageService)
+        let dependencies: PhotoListFeatureDependencies = (
+            photoListObservableObject: photoListObservableObject,
+            videoFeature: videoFeature
+        )
+        return PhotoListFeature(dependencies: dependencies)
+    }()
+    
+    lazy var videoFeature: VideoFeature = {
+        let ids = [
+            1526909,
+            5386411,
+            6963395,
+            7438482,
+            1409899,
+            3163534,
+            2169880,
+            857251,
+            856973,
+            1093662,
+        ]
+        let videoService = VideoService(httpClient: httpClient)
+        let dependencies = VideoDetailObservableObject(videoService: videoService, videoIds: ids)
+        return VideoFeature(dependencies: dependencies)
+    }()
 }

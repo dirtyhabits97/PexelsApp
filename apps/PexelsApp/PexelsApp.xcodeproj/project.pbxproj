@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D61A3E812C1E807F004A7103 /* PexelsFeatures in Frameworks */ = {isa = PBXBuildFile; productRef = D61A3E802C1E807F004A7103 /* PexelsFeatures */; };
+		D61A3E832C1E807F004A7103 /* PexelsLib in Frameworks */ = {isa = PBXBuildFile; productRef = D61A3E822C1E807F004A7103 /* PexelsLib */; };
 		D62C8A1E2C1D6515000C0DC8 /* PexelsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62C8A1D2C1D6515000C0DC8 /* PexelsApp.swift */; };
 		D62C8A222C1D6516000C0DC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D62C8A212C1D6516000C0DC8 /* Assets.xcassets */; };
 		D62C8A252C1D6516000C0DC8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D62C8A242C1D6516000C0DC8 /* Preview Assets.xcassets */; };
 		D62C8A2F2C1D6517000C0DC8 /* PexelsAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62C8A2E2C1D6517000C0DC8 /* PexelsAppTests.swift */; };
 		D62C8A392C1D6517000C0DC8 /* PexelsAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62C8A382C1D6517000C0DC8 /* PexelsAppUITests.swift */; };
 		D62C8A3B2C1D6517000C0DC8 /* PexelsAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D62C8A3A2C1D6517000C0DC8 /* PexelsAppUITestsLaunchTests.swift */; };
-		D62C8A492C1D657E000C0DC8 /* PexelsLib in Frameworks */ = {isa = PBXBuildFile; productRef = D62C8A482C1D657E000C0DC8 /* PexelsLib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +51,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D62C8A492C1D657E000C0DC8 /* PexelsLib in Frameworks */,
+				D61A3E812C1E807F004A7103 /* PexelsFeatures in Frameworks */,
+				D61A3E832C1E807F004A7103 /* PexelsLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,7 +145,8 @@
 			);
 			name = PexelsApp;
 			packageProductDependencies = (
-				D62C8A482C1D657E000C0DC8 /* PexelsLib */,
+				D61A3E802C1E807F004A7103 /* PexelsFeatures */,
+				D61A3E822C1E807F004A7103 /* PexelsLib */,
 			);
 			productName = PexelsApp;
 			productReference = D62C8A1A2C1D6515000C0DC8 /* PexelsApp.app */;
@@ -218,7 +221,7 @@
 			);
 			mainGroup = D62C8A112C1D6515000C0DC8;
 			packageReferences = (
-				D62C8A472C1D657E000C0DC8 /* XCLocalSwiftPackageReference "../../libraries" */,
+				D61A3E7F2C1E807F004A7103 /* XCLocalSwiftPackageReference "../../libraries" */,
 			);
 			productRefGroup = D62C8A1B2C1D6515000C0DC8 /* Products */;
 			projectDirPath = "";
@@ -594,14 +597,18 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		D62C8A472C1D657E000C0DC8 /* XCLocalSwiftPackageReference "../../libraries" */ = {
+		D61A3E7F2C1E807F004A7103 /* XCLocalSwiftPackageReference "../../libraries" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../../libraries;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D62C8A482C1D657E000C0DC8 /* PexelsLib */ = {
+		D61A3E802C1E807F004A7103 /* PexelsFeatures */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PexelsFeatures;
+		};
+		D61A3E822C1E807F004A7103 /* PexelsLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PexelsLib;
 		};

@@ -1,28 +1,61 @@
 import Combine
+import PexelsLib
 import SwiftUI
 
 @available(macOS 15.0, *)
 public struct PhotoListView: View {
     @StateObject
-    var observedObject: PhotoListObservableObject
+    private var observedObject: PhotoListObservableObject
+    @State
+    private var isVideoDetailPresented = false
 
-    public init(photoListObservableObject: PhotoListObservableObject) {
+    private let videoFeature: VideoFeature?
+
+    public init(
+        photoListObservableObject: PhotoListObservableObject,
+        videoFeature: VideoFeature? = nil
+    ) {
         _observedObject = StateObject(wrappedValue: photoListObservableObject)
+        self.videoFeature = videoFeature
     }
 
     public var body: some View {
         List(observedObject.photos) { photo in
-            PhotoRowView(photo: photo)
-                .onAppear {
-                    if photo.id == observedObject.photos.last?.id {
-                        observedObject.loadMorePhotos()
-                    }
+            NavigationLink(destination: PhotoDetailView(photo: photo)) {
+                PhotoRowView(photo: photo)
+            }
+            .onAppear {
+                if photo.id == observedObject.photos.last?.id {
+                    observedObject.loadMorePhotos()
                 }
+            }
         }
         .onAppear {
             observedObject.loadMorePhotos()
         }
         .navigationTitle("Photos")
+        #if os(iOS)
+            .navigationBarItems(trailing: navigationButton)
+        #endif
+    }
+
+    @ViewBuilder
+    private var navigationButton: some View {
+        if videoFeature != nil {
+            Button(action: {
+                isVideoDetailPresented = true
+            }, label: {
+                Image(systemName: "play.circle.fill")
+                    .imageScale(.large)
+            })
+            .sheet(isPresented: $isVideoDetailPresented, content: {
+                if let videoDetailView = videoFeature?.buildView() {
+                    videoDetailView
+                }
+            })
+        } else {
+            EmptyView()
+        }
     }
 }
 
@@ -39,11 +72,6 @@ struct PhotoRowView: View {
                     .font(.headline)
                 averageColor
             }
-
-            Spacer()
-
-            Image(systemName: "chevron.right")
-                .foregroundColor(.gray)
         }
     }
 

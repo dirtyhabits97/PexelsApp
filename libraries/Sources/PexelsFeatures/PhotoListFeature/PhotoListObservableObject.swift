@@ -1,7 +1,6 @@
 import Combine
+import PexelsLib
 import SwiftUI
-
-// TODO: Move this to its own PexelsFeature package
 
 @available(macOS 15.0, *)
 public final class PhotoListObservableObject: ObservableObject {

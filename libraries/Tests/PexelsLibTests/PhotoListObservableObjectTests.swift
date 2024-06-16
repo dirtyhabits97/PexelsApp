@@ -1,4 +1,5 @@
 import Combine
+@testable import PexelsFeatures
 @testable import PexelsLib
 import XCTest
 

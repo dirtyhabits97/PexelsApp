@@ -1,4 +1,5 @@
 import Combine
+import PexelsLib
 import SwiftUI
 
 @available(macOS 15.0, *)
@@ -14,18 +15,15 @@ public final class VideoDetailObservableObject: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
     private let videoService: VideoService
-    private let videoId: Int
+    private let videoIds: [Int]
 
-    public init(videoService: VideoService) {
+    public init(videoService: VideoService, videoIds: [Int]) {
         self.videoService = videoService
-        // TODO: Check if we want to hardcode the video ids or receive it from somewhere
-        videoId = [
-            2_499_611,
-        ].randomElement() ?? -1
+        self.videoIds = videoIds
     }
 
     func fetchVideoMetadata() {
-        let request = GetVideoMetadataRequest(id: videoId)
+        let request = GetVideoMetadataRequest(id: getVideoId())
         isLoading = true
         videoService
             .getVideoMetadata(request)
@@ -44,5 +42,9 @@ public final class VideoDetailObservableObject: ObservableObject {
                 self?.video = response
             })
             .store(in: &cancellables)
+    }
+
+    private func getVideoId() -> Int {
+        videoIds.randomElement() ?? -1
     }
 }

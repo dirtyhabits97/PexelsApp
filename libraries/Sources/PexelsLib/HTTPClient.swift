@@ -34,6 +34,10 @@ public final class HTTPClientImpl: HTTPClient {
             return urlSession
                 .dataTaskPublisher(for: urlRequest)
                 .map(\.data)
+                .map { data in
+                    print("com.HTTPClient: Data \(String(data: data, encoding: .utf8))")
+                    return data
+                }
                 .decode(type: Model.self, decoder: jsonDecoder)
                 .mapError { $0 as Error }
                 .eraseToAnyPublisher()
@@ -69,6 +73,12 @@ public struct HTTPRequest {
     let endpoint: String
     let queryParams: [String: String]?
     let method: HTTPMethod
+
+    init(endpoint: String, queryParams: [String: String]? = nil, method: HTTPMethod) {
+        self.endpoint = endpoint
+        self.queryParams = queryParams
+        self.method = method
+    }
 }
 
 public enum HTTPMethod: String {

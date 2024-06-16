@@ -7,24 +7,24 @@ import Foundation
 // B) Create a local Id that is a combination of the page and the id hashed together.
 public struct Photo: Codable, Identifiable {
     public let id: Int
-    let width: Int
-    let height: Int
-    let url: URL
-    let photographer: String
-    let photographerUrl: URL
-    let photographerId: Int
-    let avgColor: String
-    let src: PhotoSource
-    let alt: String
+    public let width: Int
+    public let height: Int
+    public let url: URL
+    public let photographer: String
+    public let photographerUrl: URL
+    public let photographerId: Int
+    public let avgColor: String
+    public let src: PhotoSource
+    public let alt: String
 }
 
-struct PhotoSource: Codable {
-    let original: URL
-    let large2x: URL?
-    let large: URL?
-    let medium: URL?
-    let small: URL?
-    let portrait: URL?
-    let landscape: URL?
-    let tiny: URL
+public struct PhotoSource: Codable {
+    public let original: URL
+    public let large2x: URL?
+    public let large: URL?
+    public let medium: URL?
+    public let small: URL?
+    public let portrait: URL?
+    public let landscape: URL?
+    public let tiny: URL
 }
