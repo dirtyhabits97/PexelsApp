@@ -5,20 +5,13 @@ struct GetVideoMetadataRequest {
     let id: Int
 }
 
-struct GetVideoMetadataResponse: Codable {
-    let id: Int
-    let width: Int
-    let height: Int
-    let url: URL
-    let image: URL
-    let duration: Int
-}
+typealias GetVideoMetadataResponse = Video
 
 @available(macOS 15.0, *)
-final class VideoService {
+public final class VideoService {
     private let httpClient: HTTPClient
 
-    init(httpClient: HTTPClient) {
+    public init(httpClient: HTTPClient) {
         self.httpClient = httpClient
     }
 
