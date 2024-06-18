@@ -4,7 +4,8 @@ import SwiftUI
 @available(macOS 15.0, *)
 public typealias PhotoListFeatureDependencies = (
     photoListObservableObject: PhotoListObservableObject,
-    videoFeature: VideoFeature?
+    videoFeature: VideoFeature?,
+    networkStatusFeature: NetworkStatusFeature?
 )
 
 @available(macOS 15.0, *)
@@ -18,7 +19,8 @@ public final class PhotoListFeature {
     public func buildView() -> some View {
         PhotoListView(
             photoListObservableObject: dependencies.photoListObservableObject,
-            videoFeature: dependencies.videoFeature
+            videoFeature: dependencies.videoFeature,
+            networkStatusFeature: dependencies.networkStatusFeature
         )
     }
 }

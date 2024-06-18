@@ -9,23 +9,25 @@ struct PhotoListView: View {
     private var observedObject: PhotoListObservableObject
     @State
     private var isVideoDetailPresented = false
-
-    private let videoFeature: VideoFeature?
-
     @State
     private var isFirstTimeAppearing = true
 
+    private let videoFeature: VideoFeature?
+    private let networkStatusFeature: NetworkStatusFeature?
+
     init(
         photoListObservableObject: PhotoListObservableObject,
-        videoFeature: VideoFeature? = nil
+        videoFeature: VideoFeature? = nil,
+        networkStatusFeature: NetworkStatusFeature? = nil
     ) {
         _observedObject = StateObject(wrappedValue: photoListObservableObject)
         self.videoFeature = videoFeature
+        self.networkStatusFeature = networkStatusFeature
     }
 
     var body: some View {
         List(observedObject.photos) { photo in
-            NavigationLink(destination: PhotoDetailView(photo: photo)) {
+            NavigationLink(destination: PhotoDetailView(photo: photo, networkStatusFeature: networkStatusFeature)) {
                 PhotoRowView(photo: photo)
             }
             .onAppear {
@@ -42,12 +44,15 @@ struct PhotoListView: View {
         }
         .navigationTitle("Photos")
         #if os(iOS)
-            .navigationBarItems(trailing: navigationButton)
+            .navigationBarItems(
+                leading: leadingNavigationView,
+                trailing: trailingNavigationButton
+            )
         #endif
     }
 
     @ViewBuilder
-    private var navigationButton: some View {
+    private var trailingNavigationButton: some View {
         if videoFeature != nil {
             Button(action: {
                 isVideoDetailPresented = true
@@ -60,6 +65,15 @@ struct PhotoListView: View {
                     videoDetailView
                 }
             })
+        } else {
+            EmptyView()
+        }
+    }
+
+    @ViewBuilder
+    private var leadingNavigationView: some View {
+        if let networkStatusFeature {
+            networkStatusFeature.buildView()
         } else {
             EmptyView()
         }

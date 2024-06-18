@@ -6,9 +6,14 @@ import SwiftUI
 @available(macOS 15.0, *)
 struct PhotoDetailView: View {
     private let photo: Photo
+    private let networkStatusFeature: NetworkStatusFeature?
 
-    init(photo: Photo) {
+    init(
+        photo: Photo,
+        networkStatusFeature: NetworkStatusFeature? = nil
+    ) {
         self.photo = photo
+        self.networkStatusFeature = networkStatusFeature
     }
 
     var body: some View {
@@ -31,13 +36,18 @@ struct PhotoDetailView: View {
         }
         .padding()
         .navigationTitle("Photo")
+        #if os(iOS)
+            .navigationBarItems(
+                trailing: trailingNavigationButton
+            )
+        #endif
     }
 
     private var imageView: some View {
         KFImage(photo.src.large ?? photo.src.original)
             .placeholder {
                 ProgressView()
-                 .frame(width: 50, height: 50)
+                    .frame(width: 50, height: 50)
             }
             .resizable()
             .scaledToFit()
@@ -86,6 +96,15 @@ struct PhotoDetailView: View {
                     .lineLimit(1)
                     .truncationMode(.middle)
             }
+        }
+    }
+
+    @ViewBuilder
+    private var trailingNavigationButton: some View {
+        if let networkStatusFeature {
+            networkStatusFeature.buildView()
+        } else {
+            EmptyView()
         }
     }
 }

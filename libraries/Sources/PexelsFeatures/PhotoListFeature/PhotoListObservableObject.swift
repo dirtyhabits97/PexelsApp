@@ -46,12 +46,11 @@ public final class PhotoListObservableObject: ObservableObject {
             }, receiveValue: { [weak self] response in
                 self?.updateLocalStorage(with: response)
                 // If this is the first page, update the current objects in memory
+                // Else, add objects to the array
                 if response.page == 1 {
                     self?.photos = response.photos
-                // Else, add objects to the array
                 } else {
                     self?.photos.append(contentsOf: response.photos)
-                    
                 }
                 self?.lastResponse = response
             })
