@@ -5,13 +5,15 @@
 Functional requirements
 * The user should be able to see a list of curated images
 * The user should be able to see the detail of the image and a high res image
-* The user should be able to play a random video in the image detail screen
+* The user should be able to play a random video
+* The user should be able to see if they are online or offline
 
 Non Functional requirements
 * Support offline mode
+* Store up to 50MB worth of images in disk
 
 Out of scope
-* Realtime video play
+* Store videos locally
 
 ## High Level Diagram
 Architecture overview of the app:
@@ -59,3 +61,16 @@ to download the images in the `__Snapshots__` folder. After that you can run:
 ```
 cd libraries & ./test.sh
 ```
+
+## How to run the project
+1. You will need to generate an API key from pexels [here](https://help.pexels.com/hc/en-us/articles/900004904026-How-do-I-get-an-API-key)
+2. Open [PexelsApp.swift](apps/PexelsApp/PexelsApp/PexelsApp.swift) and look for this line:
+```swift
+lazy var httpClient: HTTPClient = HTTPClientImpl(apiKey: ProcessInfo.processInfo.environment["PEXELS_API_KEY"] ?? "")
+```
+You can pass your API key as a string:
+```swift
+lazy var httpClient: HTTPClient = HTTPClientImpl(apiKey: "MY_API_KEY")
+```
+
+You can also get an idea of the features of the application by visiting the `libraries/Tests/PexelsLibTests/__Snapshots__/` folder.
