@@ -3,7 +3,6 @@ import Combine
 @testable import PexelsLib
 import XCTest
 
-@available(iOS 16.0, *)
 @available(macOS 15.0, *)
 final class PhotoListObservableObjectTests: XCTestCase {
     var cancellables = Set<AnyCancellable>()

@@ -1,9 +1,10 @@
 import Combine
+import Kingfisher
 import PexelsLib
 import SwiftUI
 
 @available(macOS 15.0, *)
-public struct PhotoListView: View {
+struct PhotoListView: View {
     @StateObject
     private var observedObject: PhotoListObservableObject
     @State
@@ -11,7 +12,10 @@ public struct PhotoListView: View {
 
     private let videoFeature: VideoFeature?
 
-    public init(
+    @State
+    private var isFirstTimeAppearing = true
+
+    init(
         photoListObservableObject: PhotoListObservableObject,
         videoFeature: VideoFeature? = nil
     ) {
@@ -19,7 +23,7 @@ public struct PhotoListView: View {
         self.videoFeature = videoFeature
     }
 
-    public var body: some View {
+    var body: some View {
         List(observedObject.photos) { photo in
             NavigationLink(destination: PhotoDetailView(photo: photo)) {
                 PhotoRowView(photo: photo)
@@ -31,7 +35,10 @@ public struct PhotoListView: View {
             }
         }
         .onAppear {
-            observedObject.loadMorePhotos()
+            if isFirstTimeAppearing {
+                observedObject.loadMorePhotos()
+                isFirstTimeAppearing = false
+            }
         }
         .navigationTitle("Photos")
         #if os(iOS)
@@ -76,16 +83,15 @@ struct PhotoRowView: View {
     }
 
     private var imageView: some View {
-        AsyncImage(url: photo.src.tiny) { image in
-            image
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 50, height: 50)
-                .cornerRadius(5)
-        } placeholder: {
-            ProgressView()
-                .frame(width: 50, height: 50)
-        }
+        KFImage(photo.src.tiny)
+            .placeholder {
+                ProgressView()
+                    .frame(width: 50, height: 50)
+            }
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(width: 50, height: 50)
+            .cornerRadius(5)
     }
 
     private var averageColor: some View {

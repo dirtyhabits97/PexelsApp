@@ -8,9 +8,11 @@
 import SwiftUI
 import PexelsLib
 import PexelsFeatures
+import RealmSwift
+import Kingfisher
 
 @main
-struct PexelsApp: App {
+struct PexelsApp: SwiftUI.App {
     
     @StateObject var dependencyContainer = DependencyContainer()
     
@@ -24,13 +26,26 @@ struct PexelsApp: App {
 }
 
 final class DependencyContainer: ObservableObject {
-    lazy var httpClient = HTTPClientImpl(apiKey: ProcessInfo.processInfo.environment["PEXELS_API_KEY"] ?? "")
+    lazy var httpClient: HTTPClient = HTTPClientImpl(apiKey: ProcessInfo.processInfo.environment["PEXELS_API_KEY"] ?? "")
+    lazy var localStorage: LocalStorage? = {
+        do {
+            let realm = try Realm()
+            print("com.DependencyContainer: Realm path = \"\(realm.configuration.fileURL?.absoluteString)\"")
+            return RealmStorage(realm: realm)
+        } catch {
+            print("com.DependencyContainer: Failed to start Realm \(error)")
+            return nil
+        }
+    }()
     
     // MARK: - Features
     
     lazy var photoListFeature: PhotoListFeature = {
         let imageService = ImagesService(config: ImagesServiceConfig(), httpClient: httpClient)
-        let photoListObservableObject = PhotoListObservableObject(imagesService: imageService)
+        let photoListObservableObject = PhotoListObservableObject(
+            imagesService: imageService,
+            localStorage: localStorage
+        )
         let dependencies: PhotoListFeatureDependencies = (
             photoListObservableObject: photoListObservableObject,
             videoFeature: videoFeature
@@ -55,4 +70,9 @@ final class DependencyContainer: ObservableObject {
         let dependencies = VideoDetailObservableObject(videoService: videoService, videoIds: ids)
         return VideoFeature(dependencies: dependencies)
     }()
+    
+    init() {
+        let cache = Kingfisher.ImageCache.default
+        cache.diskStorage.config.sizeLimit = 50 * 1024 * 1024 // 50 MB
+    }
 }

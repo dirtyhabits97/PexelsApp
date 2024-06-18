@@ -1,16 +1,17 @@
 import Combine
+import Kingfisher
 import PexelsLib
 import SwiftUI
 
 @available(macOS 15.0, *)
-public struct PhotoDetailView: View {
+struct PhotoDetailView: View {
     private let photo: Photo
 
-    public init(photo: Photo) {
+    init(photo: Photo) {
         self.photo = photo
     }
 
-    public var body: some View {
+    var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             imageView
 
@@ -33,16 +34,16 @@ public struct PhotoDetailView: View {
     }
 
     private var imageView: some View {
-        AsyncImage(url: photo.src.large ?? photo.src.original) { image in
-            image
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: .infinity)
-                .cornerRadius(10)
-        } placeholder: {
-            ProgressView()
-        }
-        .frame(height: 300)
+        KFImage(photo.src.large ?? photo.src.original)
+            .placeholder {
+                ProgressView()
+                 .frame(width: 50, height: 50)
+            }
+            .resizable()
+            .scaledToFit()
+            .frame(maxWidth: .infinity)
+            .cornerRadius(10)
+            .frame(height: 300)
     }
 
     private var colorInfoView: some View {
@@ -62,11 +63,13 @@ public struct PhotoDetailView: View {
                 .font(.caption)
                 .fontWeight(.bold)
             Spacer()
-            Text(photo.url.absoluteString)
-                .font(.caption)
-                .foregroundColor(.blue)
-                .lineLimit(1)
-                .truncationMode(.middle)
+            if let photoUrl = photo.url {
+                Text(photoUrl.absoluteString)
+                    .font(.caption)
+                    .foregroundColor(.blue)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
+            }
         }
     }
 
@@ -76,11 +79,13 @@ public struct PhotoDetailView: View {
                 .font(.caption)
                 .fontWeight(.bold)
             Spacer()
-            Text(photo.photographerUrl.absoluteString)
-                .font(.caption)
-                .foregroundColor(.blue)
-                .lineLimit(1)
-                .truncationMode(.middle)
+            if let photographerUrl = photo.photographerUrl {
+                Text(photographerUrl.absoluteString)
+                    .font(.caption)
+                    .foregroundColor(.blue)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
+            }
         }
     }
 }

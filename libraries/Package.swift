@@ -5,7 +5,10 @@ import PackageDescription
 
 let package = Package(
     name: "PexelsLib",
-    platforms: [.iOS(.v16)],
+    platforms: [
+        .iOS(.v16),
+        .macOS(.v10_15),
+    ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
@@ -19,23 +22,31 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.12.0"),
-        // .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "6.0.0")),
+        .package(url: "https://github.com/realm/realm-swift", from: "10.51.0"),
+        .package(url: "https://github.com/onevcat/Kingfisher.git", from: "7.12.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "PexelsLib"
+            name: "PexelsLib",
+            dependencies: [
+                .product(name: "RealmSwift", package: "realm-swift"),
+            ]
         ),
         .target(
             name: "PexelsFeatures",
-            dependencies: ["PexelsLib"]
+            dependencies: [
+                "Kingfisher",
+                "PexelsLib",
+            ]
         ),
         .testTarget(
             name: "PexelsLibTests",
             dependencies: [
                 "PexelsLib",
                 "PexelsFeatures",
+                .product(name: "RealmSwift", package: "realm-swift"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ],
             resources: [

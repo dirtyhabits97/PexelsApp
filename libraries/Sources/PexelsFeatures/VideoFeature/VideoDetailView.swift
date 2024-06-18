@@ -3,15 +3,15 @@ import PexelsLib
 import SwiftUI
 
 @available(macOS 15.0, *)
-public struct VideoDetailView: View {
+struct VideoDetailView: View {
     @StateObject
     private var observedObject: VideoDetailObservableObject
 
-    public init(videoDetailObservableObject: VideoDetailObservableObject) {
+    init(videoDetailObservableObject: VideoDetailObservableObject) {
         _observedObject = StateObject(wrappedValue: videoDetailObservableObject)
     }
 
-    public var body: some View {
+    var body: some View {
         contentView
             .onAppear {
                 observedObject.fetchVideoMetadata()
@@ -44,8 +44,12 @@ private struct VideoContentView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            // TODO: Avoid force unwrap
-            VideoPlayerView(videoURL: videoURL!)
+            if let videoURL {
+                VideoPlayerView(videoURL: videoURL)
+            } else {
+                Text("Couldn't find the video file")
+                    .foregroundColor(.red)
+            }
 
             Text(video.user.name)
                 .font(.title2)
@@ -70,4 +74,3 @@ private struct VideoContentView: View {
         .padding(.horizontal, 16)
     }
 }
-

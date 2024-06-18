@@ -8,10 +8,10 @@ public protocol HTTPClient {
 
 @available(macOS 15.0, *)
 public final class HTTPClientImpl: HTTPClient {
-    private let baseURL = URL(string: "https://api.pexels.com")!
     private let urlSession: URLSession
-
-    private let jsonDecoder: JSONDecoder = {
+    
+    let baseURL = URL(string: "https://api.pexels.com")!
+    let jsonDecoder: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
