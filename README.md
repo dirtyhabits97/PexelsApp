@@ -44,24 +44,6 @@ Additionally, we can create a stream to get notifications on the connectivity st
 NetworkConnectionStream
 + status: Observable<Status>
 ```
-
-## How to test
-
-The project is divided in:
-* `app`: Contains the glue code for all the features and dependencies
-* `library`: Contains the features + business logic
-
-The tests can be found in `library/`. If you want to run only unit tests, you can do the following:
-```
-cd libraries & swift test
-```
-
-If you want to run all the tests, including snapshot tests, you will need to install [git-lfs](https://git-lfs.com/) first
-to download the images in the `__Snapshots__` folder. After that you can run:
-```
-cd libraries & ./test.sh
-```
-
 ## How to run the project
 1. You will need to generate an API key from pexels [here](https://help.pexels.com/hc/en-us/articles/900004904026-How-do-I-get-an-API-key)
 2. Open [PexelsApp.swift](apps/PexelsApp/PexelsApp/PexelsApp.swift) and look for this line:
@@ -73,4 +55,23 @@ You can pass your API key as a string:
 lazy var httpClient: HTTPClient = HTTPClientImpl(apiKey: "MY_API_KEY")
 ```
 
-You can also get an idea of the features of the application by visiting the `libraries/Tests/PexelsLibTests/__Snapshots__/` folder.
+## How to test
+
+The project is divided in:
+* `app`: Contains the glue code for all the features and dependencies
+* `library`: Contains the features + business logic
+
+The tests can be found in `library/`. If you want to run only unit tests, you can do the following:
+
+```
+cd libraries & swift test
+```
+
+If you want to run all the tests, including snapshot tests, you will need to install [git-lfs](https://git-lfs.com/) first
+to download the images in the `__Snapshots__` folder. After that you can run:
+```
+cd libraries & ./test.sh
+```
+
+## Code Coverage
+![Code Coverage](./images/code_coverage.png)
