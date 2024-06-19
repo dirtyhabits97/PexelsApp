@@ -14,11 +14,6 @@ final class PhotoDetailViewTests: XCTestCase {
         ).photos[0]
         // then
         let view = PhotoDetailView(photo: fixture)
-        #if os(iOS)
-            assertSnapshot(
-                of: view,
-                as: .image(layout: .device(config: .iPhoneSe), traits: .init(userInterfaceStyle: .light))
-            )
-        #endif
+        assertAllSnapshots(of: view)
     }
 }

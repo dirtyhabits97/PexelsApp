@@ -18,12 +18,7 @@ final class PhotoListViewTests: XCTestCase {
         ).photos[0]
         // then
         let view = PhotoRowView(photo: fixture)
-        #if os(iOS)
-            assertSnapshot(
-                of: view,
-                as: .image(layout: .device(config: .iPhoneSe), traits: .init(userInterfaceStyle: .light))
-            )
-        #endif
+        assertAllSnapshots(of: view)
     }
 
     func test_listWithOneElement() throws {
@@ -48,13 +43,7 @@ final class PhotoListViewTests: XCTestCase {
 
         // then
         let view = PhotoListView(photoListObservableObject: observableObject)
-        #if os(iOS)
-            assertSnapshot(
-                of: view,
-                // as: .wait(for: 5, on: .image(layout: .device(config: .iPhoneSe), traits: .init(userInterfaceStyle: .light)))
-                as: .image(layout: .device(config: .iPhoneSe), traits: .init(userInterfaceStyle: .light))
-            )
-        #endif
+        assertAllSnapshots(of: view)
     }
 
     func test_listWithMultipleElements() throws {
@@ -79,12 +68,7 @@ final class PhotoListViewTests: XCTestCase {
 
         // then
         let view = PhotoListView(photoListObservableObject: observableObject)
-        #if os(iOS)
-            assertSnapshot(
-                of: view,
-                as: .image(layout: .device(config: .iPhoneSe), traits: .init(userInterfaceStyle: .light))
-            )
-        #endif
+        assertAllSnapshots(of: view)
     }
 
     // MARK: - Helpers
