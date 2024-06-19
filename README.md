@@ -46,14 +46,9 @@ NetworkConnectionStream
 ```
 
 ## Screenshots
-Photo list:
-![Photo List](./images/photo_list.PNG)
-
-Photo detail:
-![Photo Detail](./images/photo_detail.PNG)
-
-Video detail:
-![Video Detail](./images/video_detail.PNG)
+| Photo list | Photo detail | Video detail |
+|------------|--------------|--------------|
+| ![Photo List](./images/photo_list.PNG) | ![Photo Detail](./images/photo_detail.PNG) | ![Video Detail](./images/video_detail.PNG) |
 
 ## How to run the project
 1. You will need to generate an API key from pexels [here](https://help.pexels.com/hc/en-us/articles/900004904026-How-do-I-get-an-API-key)
