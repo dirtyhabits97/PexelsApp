@@ -14,6 +14,6 @@ final class PhotoDetailViewTests: XCTestCase {
         ).photos[0]
         // then
         let view = PhotoDetailView(photo: fixture)
-        assertAllSnapshots(of: view)
+        assertFullscreenSnapshots(of: view)
     }
 }

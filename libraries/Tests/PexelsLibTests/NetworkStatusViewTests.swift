@@ -14,7 +14,7 @@ final class NetworkStatusViewTests: XCTestCase {
         let observableObject = NetworkStatusObservableObject(networkStatusStream: networkStatusStream)
         // then
         let view = NetworkStatusView(networkStatusObservableObject: observableObject)
-        assertAllSnapshots(of: view)
+        assertCompactSnapshots(of: view)
     }
 
     func test_viewWithWiFiStatus() {
@@ -33,7 +33,7 @@ final class NetworkStatusViewTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
         // then
         let view = NetworkStatusView(networkStatusObservableObject: observableObject)
-        assertAllSnapshots(of: view)
+        assertCompactSnapshots(of: view)
     }
 
     func test_viewWithCellularStatus() {
@@ -52,7 +52,7 @@ final class NetworkStatusViewTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
         // then
         let view = NetworkStatusView(networkStatusObservableObject: observableObject)
-        assertAllSnapshots(of: view)
+        assertCompactSnapshots(of: view)
     }
 
     override func setUp() {

@@ -18,7 +18,7 @@ final class PhotoListViewTests: XCTestCase {
         ).photos[0]
         // then
         let view = PhotoRowView(photo: fixture)
-        assertAllSnapshots(of: view)
+        assertCompactSnapshots(of: view)
     }
 
     func test_listWithOneElement() throws {
@@ -43,7 +43,7 @@ final class PhotoListViewTests: XCTestCase {
 
         // then
         let view = PhotoListView(photoListObservableObject: observableObject)
-        assertAllSnapshots(of: view)
+        assertFullscreenSnapshots(of: view)
     }
 
     func test_listWithMultipleElements() throws {
@@ -68,7 +68,7 @@ final class PhotoListViewTests: XCTestCase {
 
         // then
         let view = PhotoListView(photoListObservableObject: observableObject)
-        assertAllSnapshots(of: view)
+        assertFullscreenSnapshots(of: view)
     }
 
     // MARK: - Helpers
